@@ -30,3 +30,17 @@ Run
 ```
 node server.js
 ```
+
+### Tweepy Example: searching using somebody else's keys
+
+```python
+# consumer_key, consumer_secret are the key and secret of the app
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+
+# user_access_token and user_access_secret are those that we save in tokens.csv
+auth.set_access_token(user_access_token, user_access_secret)
+
+api = tweepy.API(auth)
+
+print(api.me().screen_name)
+```

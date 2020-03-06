@@ -16,20 +16,18 @@ var fs = require('fs');
 var app = express();
 
 // all environments
-app.configure(function(){
-  app.set('port', config.PORT || 80);
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser());
-  app.use(express.session({  secret: config.EXPRESS_SESSION_SECRET }));
-  app.use(function(req, res, next){
-      res.locals.user = req.session.user;
-      next();
-    });
-  app.use(app.router);
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
+app.set('port', config.PORT || 80);
+app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(express.cookieParser());
+app.use(express.session({  secret: config.EXPRESS_SESSION_SECRET }));
+app.use(function(req, res, next){
+    res.locals.user = req.session.user;
+    next();
+  });
+app.use(app.router);
+app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
 var _twitterConsumerKey = config.TWITTER_CONSUMER_KEY;
 var _twitterConsumerSecret = config.TWITTER_CONSUMER_SECRET;

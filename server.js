@@ -37,7 +37,7 @@ console.log("_twitterConsumerKey: %s and _twitterConsumerSecret %s", _twitterCon
 
 function consumer() {
   var callbackUrl = config.HOSTPATH+'/sessions/callback';
-  console.log("callbackUrl>>"+callbackUrl);
+  console.log(" callbackUrl >> "+callbackUrl);
 
   return new oauth.OAuth(
     'https://api.twitter.com/oauth/request_token',
@@ -51,7 +51,6 @@ function consumer() {
 }
 
 app.get('/', function(req, res){
-  console.log("jajajaj");
   res.sendfile('views/index.html');
 });
 

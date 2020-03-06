@@ -12,22 +12,24 @@ console.log(config.PORT);
 var sys = require('util');
 var oauth = require('oauth');
 var fs = require('fs');
+var logger = require('morgan');
+var body_parser = require('body-parser');
+var method_override = require('method-override');
+var session = require('express-session');
+var error_handler = require('errorhandler');
 
 var app = express();
-
 // all environments
 app.set('port', config.PORT || 80);
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.cookieParser());
-app.use(express.session({  secret: config.EXPRESS_SESSION_SECRET }));
-app.use(function(req, res, next){
-    res.locals.user = req.session.user;
-    next();
-  });
-app.use(app.router);
-app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+
+app.use(logger("default"));
+app.use(body_parser.urlencoded({
+  extended: true
+}));
+app.use(body_parser.json());
+app.use(method_override());
+app.use(session({  secret: config.EXPRESS_SESSION_SECRET }));
+app.use(error_handler({ dumpExceptions: true, showStack: true }));
 
 var _twitterConsumerKey = config.TWITTER_CONSUMER_KEY;
 var _twitterConsumerSecret = config.TWITTER_CONSUMER_SECRET;
@@ -49,6 +51,7 @@ function consumer() {
 }
 
 app.get('/', function(req, res){
+  console.log("jajajaj");
   res.sendfile('views/index.html');
 });
 
